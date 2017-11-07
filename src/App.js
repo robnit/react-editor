@@ -8,7 +8,7 @@ class App extends Component {
     super();
     this.state = {
       outputText: 'woof',
-      fontSize: 36
+      fontSize: 64
     };
   }
 
@@ -17,6 +17,7 @@ class App extends Component {
   }
 
   handleFontSizeChange(value) {
+    console.log('value is', this.state.fontSize);
     this.setState({ fontSize: value });
   }
 
@@ -43,11 +44,13 @@ class Controls extends Component {
       <div>
         <label>
           Insert Text Here:
-          <input name="outputText" value={outputText} onChange={({ target }) => onTextChange(target.value)}/>
+          <input name="outputText" value={outputText} 
+            onChange={({ target }) => onTextChange(target.value)}/>
         </label>
         <label>
           Font Size:
-          <input name="fontSize" value={fontSize} onChange={({ target }) => onFontSizeChange(target.value)}/>
+          <input name="fontSize" value={fontSize} type="range" min="0" max="100" 
+            onChange={({ target }) => onFontSizeChange(target.value)}/>
         </label>
       </div>
     );
@@ -63,7 +66,7 @@ class Text extends Component {
       <div>
         <div>
           <label>
-            <span style={{ fontSize }}>{outputText}</span>
+            <span style={{ fontSize:fontSize + 'px' }}>{outputText}</span>
           </label>
         </div>
 
