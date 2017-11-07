@@ -16,13 +16,18 @@ class App extends Component {
     this.setState({ outputText: value });
   }
 
+  handleFontSizeChange(value) {
+    this.setState({ fontSize: value });
+  }
+
   render() {
     const { outputText, fontSize } = this.state;
 
     return (
       <div>
         <Controls outputText={outputText}
-          onTextChange={outputText => this.handleTextChange(outputText)}/>
+          onTextChange={outputText => this.handleTextChange(outputText)}
+          onFontSizeChange={fontSize => this.handleFontSizeChange(fontSize)}/>
         <Text outputText={outputText} fontSize={fontSize} />
       </div>
     );
@@ -32,13 +37,17 @@ class App extends Component {
 
 class Controls extends Component {
   render() {
-    const { outputText, onTextChange } = this.props;
+    const { outputText, onTextChange, fontSize, onFontSizeChange } = this.props;
 
     return (
       <div>
         <label>
           Insert Text Here:
           <input name="outputText" value={outputText} onChange={({ target }) => onTextChange(target.value)}/>
+        </label>
+        <label>
+          Font Size:
+          <input name="fontSize" value={fontSize} onChange={({ target }) => onFontSizeChange(target.value)}/>
         </label>
       </div>
     );
