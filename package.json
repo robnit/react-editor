@@ -9,9 +9,6 @@
   },
   "scripts": {
     "pretest": "npm run lint",
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "exit 0",
-    "eject": "react-scripts eject"
+    "test": "exit 0"
   }
 }
