@@ -7,7 +7,8 @@ class App extends Component {
   constructor() {
     super();
     this.state = {
-      outputText: 'woof'
+      outputText: 'woof',
+      fontSize: 36
     };
   }
 
@@ -16,13 +17,13 @@ class App extends Component {
   }
 
   render() {
-    const { outputText } = this.state;
+    const { outputText, fontSize } = this.state;
 
     return (
       <div>
         <Controls outputText={outputText}
           onTextChange={outputText => this.handleTextChange(outputText)}/>
-        <Text outputText={outputText} />
+        <Text outputText={outputText} fontSize={fontSize} />
       </div>
     );
   }
@@ -47,13 +48,13 @@ class Controls extends Component {
 class Text extends Component {
   render() {
 
-    const { outputText } = this.props;
+    const { outputText, fontSize } = this.props;
 
     return (
       <div>
         <div>
           <label>
-            <span>{outputText}</span>
+            <span style={{ fontSize }}>{outputText}</span>
           </label>
         </div>
 
