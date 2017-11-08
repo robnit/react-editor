@@ -10,7 +10,8 @@ class App extends Component {
       fontSize: 64,
       letterSpacing: 12,
       offset: 0,
-      weight: 100
+      weight: 100,
+      color: '#00ff00'
     };
   }
 
@@ -34,8 +35,12 @@ class App extends Component {
     this.setState({ weight: value });
   }
 
+  handleColorChange(value) {
+    this.setState({ color: value });
+  }
+
   render() {
-    const { outputText, fontSize, letterSpacing, offset, weight } = this.state;
+    const { outputText, fontSize, letterSpacing, offset, weight, color } = this.state;
 
     return (
       <div>
@@ -44,8 +49,9 @@ class App extends Component {
           onFontSizeChange={fontSize => this.handleFontSizeChange(fontSize)}
           onLetterSpacingChange={letterSpacing => this.handleLetterSpacingChange(letterSpacing)}
           onOffsetChange={offset => this.handleOffsetChange(offset)}
-          onFontWeightChange={weight => this.handleFontWeightChange(weight)}/>
-        <Text outputText={outputText} fontSize={fontSize} letterSpacing={letterSpacing} offset={offset}  weight={weight} />
+          onFontWeightChange={weight => this.handleFontWeightChange(weight)}
+          onColorChange={color => this.handleColorChange(color)}/>
+        <Text outputText={outputText} fontSize={fontSize} letterSpacing={letterSpacing} offset={offset}  weight={weight} color={color} />
       </div>
     );
   }
@@ -54,7 +60,7 @@ class App extends Component {
 
 class Controls extends Component {
   render() {
-    const { outputText, onTextChange, fontSize, onFontSizeChange, letterSpacing, onLetterSpacingChange, onOffsetChange, offset, weight, onFontWeightChange } = this.props;
+    const { outputText, onTextChange, fontSize, onFontSizeChange, letterSpacing, onLetterSpacingChange, onOffsetChange, offset, weight, onFontWeightChange, color, onColorChange } = this.props;
 
     return (
       <div>
@@ -83,6 +89,11 @@ class Controls extends Component {
           <input name="weight" value={weight} type="range" min="100" max="900" 
             onChange={({ target }) => onFontWeightChange(target.value)}/>
         </label>
+        <label>
+          Color:
+          <input name="color" value={color} type="color"
+            onChange={({ target }) => onColorChange(target.value)}/>
+        </label>
       </div>
     );
   }
@@ -91,7 +102,7 @@ class Controls extends Component {
 class Text extends Component {
   render() {
 
-    const { outputText, fontSize, letterSpacing, offset, weight } = this.props;
+    const { outputText, fontSize, letterSpacing, offset, weight, color } = this.props;
 
     return (
       <div>
@@ -101,7 +112,8 @@ class Text extends Component {
               fontSize:fontSize + 'px',
               letterSpacing:letterSpacing + 'px',
               paddingLeft:offset + '%',
-              fontWeight:weight 
+              fontWeight:weight,
+              color: color
             }}>{outputText}</span>
           </label>
         </div>
