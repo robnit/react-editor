@@ -11,7 +11,8 @@ class App extends Component {
       letterSpacing: 12,
       offset: 0,
       weight: 100,
-      color: '#00ff00'
+      color: '#000000',
+      fontFamily: 'Impact'
     };
   }
 
@@ -39,8 +40,12 @@ class App extends Component {
     this.setState({ color: value });
   }
 
+  handleFontChange(value) {
+    this.setState({ fontFamily: value });
+  }
+
   render() {
-    const { outputText, fontSize, letterSpacing, offset, weight, color } = this.state;
+    const { outputText, fontSize, letterSpacing, offset, weight, color, fontFamily } = this.state;
 
     return (
       <div>
@@ -50,8 +55,9 @@ class App extends Component {
           onLetterSpacingChange={letterSpacing => this.handleLetterSpacingChange(letterSpacing)}
           onOffsetChange={offset => this.handleOffsetChange(offset)}
           onFontWeightChange={weight => this.handleFontWeightChange(weight)}
-          onColorChange={color => this.handleColorChange(color)}/>
-        <Text outputText={outputText} fontSize={fontSize} letterSpacing={letterSpacing} offset={offset}  weight={weight} color={color} />
+          onColorChange={color => this.handleColorChange(color)}
+          onFontChange={fontFamily => this.handleFontChange(fontFamily)}/>
+        <Text outputText={outputText} fontSize={fontSize} letterSpacing={letterSpacing} offset={offset}  weight={weight} color={color} fontFamily={fontFamily}  />
       </div>
     );
   }
@@ -60,7 +66,7 @@ class App extends Component {
 
 class Controls extends Component {
   render() {
-    const { outputText, onTextChange, fontSize, onFontSizeChange, letterSpacing, onLetterSpacingChange, onOffsetChange, offset, weight, onFontWeightChange, color, onColorChange } = this.props;
+    const { outputText, onTextChange, fontSize, onFontSizeChange, letterSpacing, onLetterSpacingChange, onOffsetChange, offset, weight, onFontWeightChange, color, onColorChange, fontFamily, onFontChange } = this.props;
 
     return (
       <div>
@@ -94,6 +100,15 @@ class Controls extends Component {
           <input name="color" value={color} type="color"
             onChange={({ target }) => onColorChange(target.value)}/>
         </label>
+        <label>
+          Font:
+          {/* Question: How to get default value to properly work for font dropdown? */}
+          <select name="fontFamily" selected={fontFamily} onChange={({ target }) => onFontChange(target.value)}>
+            <option value="Helvetica">Helvetica</option>
+            <option value="Impact">Impact</option>
+            <option value="Times">Times</option>
+          </select>
+        </label>
       </div>
     );
   }
@@ -102,7 +117,7 @@ class Controls extends Component {
 class Text extends Component {
   render() {
 
-    const { outputText, fontSize, letterSpacing, offset, weight, color } = this.props;
+    const { outputText, fontSize, letterSpacing, offset, weight, color, fontFamily } = this.props;
 
     return (
       <div>
@@ -113,7 +128,8 @@ class Text extends Component {
               letterSpacing:letterSpacing + 'px',
               paddingLeft:offset + '%',
               fontWeight:weight,
-              color: color
+              color:color,
+              fontFamily: fontFamily
             }}>{outputText}</span>
           </label>
         </div>
