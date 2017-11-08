@@ -9,8 +9,8 @@ class App extends Component {
     this.state = {
       outputText: 'woof',
       fontSize: 64,
-      //Question: I'm using camelcase for 'letterSpacing', but in the DOM it reads as 'letter-spacing'. What's converting it?
-      letterSpacing: 12
+      letterSpacing: 12,
+      offset: 0
     };
   }
 
@@ -26,16 +26,21 @@ class App extends Component {
     this.setState({ letterSpacing: value });
   }
 
+  handleOffsetChange(value) {
+    this.setState({ offset: value });
+  }
+
   render() {
-    const { outputText, fontSize, letterSpacing } = this.state;
+    const { outputText, fontSize, letterSpacing, offset } = this.state;
 
     return (
       <div>
         <Controls outputText={outputText}
           onTextChange={outputText => this.handleTextChange(outputText)}
           onFontSizeChange={fontSize => this.handleFontSizeChange(fontSize)}
-          onLetterSpacingChange={letterSpacing => this.handleLetterSpacingChange(letterSpacing)}/>
-        <Text outputText={outputText} fontSize={fontSize} letterSpacing={letterSpacing} />
+          onLetterSpacingChange={letterSpacing => this.handleLetterSpacingChange(letterSpacing)}
+          onOffsetChange={offset => this.handleOffsetChange(offset)}/>
+        <Text outputText={outputText} fontSize={fontSize} letterSpacing={letterSpacing} paddingLeft={offset} />
       </div>
     );
   }
@@ -44,7 +49,7 @@ class App extends Component {
 
 class Controls extends Component {
   render() {
-    const { outputText, onTextChange, fontSize, onFontSizeChange, letterSpacing, onLetterSpacingChange } = this.props;
+    const { outputText, onTextChange, fontSize, onFontSizeChange, letterSpacing, onLetterSpacingChange, onOffsetChange } = this.props;
 
     return (
       <div>
@@ -55,13 +60,18 @@ class Controls extends Component {
         </label>
         <label>
           Font Size:
-          <input name="fontSize" value={fontSize} type="range" min="0" max="100" 
+          <input name="fontSize" value={fontSize} type="range" min="0" max="400" 
             onChange={({ target }) => onFontSizeChange(target.value)}/>
         </label>
         <label>
           Letter Spacing:
-          <input name="letterSpacing" value={letterSpacing} type="range" min="-50" max="150" 
+          <input name="letterSpacing" value={letterSpacing} type="range" min="-200" max="550" 
             onChange={({ target }) => onLetterSpacingChange(target.value)}/>
+        </label>
+        <label>
+          Offset:
+          <input name="offset" value={letterSpacing} type="range" min="0" max="100" 
+            onChange={({ target }) => onOffsetChange(target.value)}/>
         </label>
       </div>
     );
@@ -71,13 +81,13 @@ class Controls extends Component {
 class Text extends Component {
   render() {
 
-    const { outputText, fontSize, letterSpacing } = this.props;
+    const { outputText, fontSize, letterSpacing, paddingLeft } = this.props;
 
     return (
       <div>
         <div>
           <label>
-            <span style={{ fontSize:fontSize + 'px', letterSpacing:letterSpacing + 'px' }}>{outputText}</span>
+            <span style={{ fontSize:fontSize + 'px', letterSpacing:letterSpacing + 'px', paddingLeft:paddingLeft + '%' }}>{outputText}</span>
           </label>
         </div>
 
