@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {
@@ -10,7 +9,8 @@ class App extends Component {
       outputText: 'woof',
       fontSize: 64,
       letterSpacing: 12,
-      offset: 0
+      offset: 0,
+      weight: 100
     };
   }
 
@@ -29,9 +29,13 @@ class App extends Component {
   handleOffsetChange(value) {
     this.setState({ offset: value });
   }
+  
+  handleFontWeightChange(value) {
+    this.setState({ weight: value });
+  }
 
   render() {
-    const { outputText, fontSize, letterSpacing, offset } = this.state;
+    const { outputText, fontSize, letterSpacing, offset, weight } = this.state;
 
     return (
       <div>
@@ -39,8 +43,9 @@ class App extends Component {
           onTextChange={outputText => this.handleTextChange(outputText)}
           onFontSizeChange={fontSize => this.handleFontSizeChange(fontSize)}
           onLetterSpacingChange={letterSpacing => this.handleLetterSpacingChange(letterSpacing)}
-          onOffsetChange={offset => this.handleOffsetChange(offset)}/>
-        <Text outputText={outputText} fontSize={fontSize} letterSpacing={letterSpacing} paddingLeft={offset} />
+          onOffsetChange={offset => this.handleOffsetChange(offset)}
+          onFontWeightChange={weight => this.handleFontWeightChange(weight)}/>
+        <Text outputText={outputText} fontSize={fontSize} letterSpacing={letterSpacing} offset={offset}  weight={weight} />
       </div>
     );
   }
@@ -49,7 +54,7 @@ class App extends Component {
 
 class Controls extends Component {
   render() {
-    const { outputText, onTextChange, fontSize, onFontSizeChange, letterSpacing, onLetterSpacingChange, onOffsetChange } = this.props;
+    const { outputText, onTextChange, fontSize, onFontSizeChange, letterSpacing, onLetterSpacingChange, onOffsetChange, offset, weight, onFontWeightChange } = this.props;
 
     return (
       <div>
@@ -70,8 +75,13 @@ class Controls extends Component {
         </label>
         <label>
           Offset:
-          <input name="offset" value={letterSpacing} type="range" min="0" max="100" 
+          <input name="offset" value={offset} type="range" min="0" max="100" 
             onChange={({ target }) => onOffsetChange(target.value)}/>
+        </label>
+        <label>
+          Weight:
+          <input name="weight" value={weight} type="range" min="100" max="900" 
+            onChange={({ target }) => onFontWeightChange(target.value)}/>
         </label>
       </div>
     );
@@ -81,13 +91,18 @@ class Controls extends Component {
 class Text extends Component {
   render() {
 
-    const { outputText, fontSize, letterSpacing, paddingLeft } = this.props;
+    const { outputText, fontSize, letterSpacing, offset, weight } = this.props;
 
     return (
       <div>
         <div>
           <label>
-            <span style={{ fontSize:fontSize + 'px', letterSpacing:letterSpacing + 'px', paddingLeft:paddingLeft + '%' }}>{outputText}</span>
+            <span style={{
+              fontSize:fontSize + 'px',
+              letterSpacing:letterSpacing + 'px',
+              paddingLeft:offset + '%',
+              fontWeight:weight 
+            }}>{outputText}</span>
           </label>
         </div>
 
