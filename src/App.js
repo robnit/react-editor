@@ -56,7 +56,12 @@ class App extends Component {
           onOffsetChange={offset => this.handleOffsetChange(offset)}
           onFontWeightChange={weight => this.handleFontWeightChange(weight)}
           onColorChange={color => this.handleColorChange(color)}
-          onFontChange={fontFamily => this.handleFontChange(fontFamily)}/>
+          onFontChange={fontFamily => this.handleFontChange(fontFamily)}
+          offset={offset}
+          color={color}
+          letterSpacing={letterSpacing}
+          weight={weight}
+          fontFamily={fontFamily}/>
         <Text outputText={outputText} fontSize={fontSize} letterSpacing={letterSpacing} offset={offset}  weight={weight} color={color} fontFamily={fontFamily}  />
       </div>
     );
@@ -102,8 +107,7 @@ class Controls extends Component {
         </label>
         <label>
           Font:
-          {/* Question: How to get default value to properly work for font dropdown? */}
-          <select name="fontFamily" selected={fontFamily} onChange={({ target }) => onFontChange(target.value)}>
+          <select name="fontFamily" defaultValue={fontFamily} onChange={({ target }) => onFontChange(target.value)}>
             <option value="Helvetica">Helvetica</option>
             <option value="Impact">Impact</option>
             <option value="Times">Times</option>
@@ -120,21 +124,16 @@ class Text extends Component {
     const { outputText, fontSize, letterSpacing, offset, weight, color, fontFamily } = this.props;
 
     return (
-      <div>
-        <div>
-          <label>
-            <span style={{
-              fontSize:fontSize + 'px',
-              letterSpacing:letterSpacing + 'px',
-              paddingLeft:offset + '%',
-              fontWeight:weight,
-              color:color,
-              fontFamily: fontFamily
-            }}>{outputText}</span>
-          </label>
-        </div>
-
-      </div>
+      <label>
+        <span style={{
+          fontSize:fontSize + 'px',
+          letterSpacing:letterSpacing + 'px',
+          paddingLeft:offset + '%',
+          fontWeight:weight,
+          color:color,
+          fontFamily: fontFamily
+        }}>{outputText}</span>
+      </label>
     );
   }
 }
